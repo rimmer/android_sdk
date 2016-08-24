@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 
 import com.adjust.sdk.Adjust;
@@ -14,12 +15,14 @@ import com.adjust.sdk.AdjustEventSuccess;
 import com.adjust.sdk.LogLevel;
 import com.adjust.sdk.OnAttributionChangedListener;
 import com.adjust.sdk.OnDeeplinkResponseListener;
+import com.adjust.sdk.OnDeviceIdsRead;
 import com.adjust.sdk.OnEventTrackingFailedListener;
 import com.adjust.sdk.OnEventTrackingSucceededListener;
 import com.adjust.sdk.OnSessionTrackingFailedListener;
 import com.adjust.sdk.OnSessionTrackingSucceededListener;
 import com.adjust.sdk.AdjustSessionFailure;
 import com.adjust.sdk.AdjustSessionSuccess;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by pfms on 17/12/14.
@@ -27,9 +30,22 @@ import com.adjust.sdk.AdjustSessionSuccess;
 public class GlobalApplication extends Application {
     @Override
     public void onCreate() {
+        LeakCanary.install(this);
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDialog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .build());
+
         super.onCreate();
         // configure Adjust
-        String appToken = "rb4g27fje5ej";
+        String appToken = "qwerty123456";
+
         String environment = AdjustConfig.ENVIRONMENT_SANDBOX;
         AdjustConfig config = new AdjustConfig(this, appToken, environment);
 
@@ -98,6 +114,13 @@ public class GlobalApplication extends Application {
         //config.setEventBufferingEnabled(true);
 
         Adjust.onCreate(config);
+
+        Adjust.getGoogleAdId(this, new OnDeviceIdsRead() {
+            @Override
+            public void onGoogleAdIdRead(String googleAdId) {
+
+            }
+        });
 
         // register onResume and onPause events of all activities
         // for applications with minSdkVersion >= 14

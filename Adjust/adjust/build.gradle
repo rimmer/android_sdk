@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'signing'
+apply plugin: 'maven'
 
 android {
     compileSdkVersion 24
@@ -24,10 +26,11 @@ task makeJar(type: Copy) {
     from('${project.buildDir}/intermediates/bundles/release/')
     into('${project.buildDir}/libs/')
     include('classes.jar')
+    //rename ('classes.jar', 'adjust-android-${project.version}.jar')
     rename ('classes.jar', 'adjust.jar')
 }
 
-makeJar.dependsOn(clearJar, build)
+//makeJar.dependsOn(clearJar, build)
 
 task androidJavadocs(type: Javadoc) {
     source = android.sourceSets.main.java.srcDirs
@@ -44,6 +47,55 @@ task androidSourcesJar(type: Jar) {
 }
 
 artifacts {
+    //archives makeJar
     archives androidSourcesJar
     archives androidJavadocsJar
 }
+
+signing {
+    sign configurations.archives
+}
+/*
+def configurePom(def pom) {
+    // ensure correct artifact ID
+    pom.groupId = GROUP
+    pom.artifactId = POM_ARTIFACT_ID
+    pom.version = VERSION_NAME
+
+    // pom file details
+    pom.project {
+        name 'Adjust Android SDK'
+        packaging 'jar'
+        description 'The Adjust SDK for Android'
+        url 'https://github.com/adjust/android_sdk'
+
+        scm {
+            url 'git@github.com:adjust/android_sdk.git'
+            connection 'scm:git:git@github.com:adjust/android_sdk.git'
+            developerConnection 'scm:git:git@github.com:adjust/android_sdk.git'
+        }
+
+        licenses {
+            license {
+                name 'MIT License'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+            }
+        }
+
+        developers {
+            developer {
+                name 'Pedro Silva'
+                email 'pedro@adjust.com'
+                organization 'adjust GmbH'
+                organizationUrl 'http://www.adjust.com'
+            }
+            developer {
+                name 'Ugljesa Erceg'
+                email 'ugljesa@adjust.com'
+                organization 'adjust GmbH'
+                organizationUrl 'http://www.adjust.com'
+            }
+        }
+    }
+}
+*/

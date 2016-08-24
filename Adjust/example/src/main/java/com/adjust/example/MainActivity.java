@@ -15,10 +15,10 @@ import com.adjust.sdk.Adjust;
 import com.adjust.sdk.AdjustEvent;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String EVENT_TOKEN_SIMPLE      = "{YourEventToken}";
+    private static final String EVENT_TOKEN_SIMPLE      = "abc123";
     private static final String EVENT_TOKEN_REVENUE     = "{YourEventToken}";
     private static final String EVENT_TOKEN_CALLBACK    = "{YourEventToken}";
-    private static final String EVENT_TOKEN_PARTNER     = "{YourEventToken}";
+    private static final String EVENT_TOKEN_PARTNER     = "abv123";
 
     private Button btnEnableDisableSDK;
 
