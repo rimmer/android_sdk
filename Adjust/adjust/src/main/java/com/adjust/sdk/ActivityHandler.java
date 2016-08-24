@@ -799,6 +799,7 @@ public class ActivityHandler implements IActivityHandler {
         if (!checkActivityStateI(activityState)) return;
         if (!this.isEnabled()) return;
         if (!checkEventI(event)) return;
+        if (!checkOrderIdI(event.orderId)) return;
 
         long now = System.currentTimeMillis();
 
@@ -1597,6 +1598,22 @@ public class ActivityHandler implements IActivityHandler {
             return false;
         }
 
+        return true;
+    }
+
+    private boolean checkOrderIdI(String orderId) {
+        if (orderId == null || orderId.isEmpty()) {
+            return true;  // no order ID given
+        }
+
+        if (activityState.findOrderId(orderId)) {
+            logger.info("Skipping duplicated order ID '%s'", orderId);
+            return false; // order ID found -> used already
+        }
+
+        activityState.addOrderId(orderId);
+        logger.verbose("Added order ID '%s'", orderId);
+        // activity state will get written by caller
         return true;
     }
 
