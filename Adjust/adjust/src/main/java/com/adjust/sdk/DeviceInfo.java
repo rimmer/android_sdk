@@ -53,13 +53,13 @@ class DeviceInfo {
     String vmInstructionSet;
     Map<String, String> pluginKeys;
 
-    DeviceInfo(Context context, String sdkPrefix) {
+    DeviceInfo(Context context, String sdkPrefix, String googleAdId) {
         Resources resources = context.getResources();
         DisplayMetrics displayMetrics = resources.getDisplayMetrics();
         Configuration configuration = resources.getConfiguration();
         Locale locale = Util.getLocale(configuration);
         int screenLayout = configuration.screenLayout;
-        boolean isGooglePlayServicesAvailable = Util.getPlayAdId(context) != null;
+        boolean isGooglePlayServicesAvailable = googleAdId == null && Util.getPlayAdId(context) != null;
         String macAddress = getMacAddress(context, isGooglePlayServicesAvailable);
         ContentResolver contentResolver = context.getContentResolver();
 

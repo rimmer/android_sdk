@@ -635,13 +635,15 @@ public class ActivityHandler implements IActivityHandler {
 
         readConfigFile(adjustConfig.context);
 
-        deviceInfo = new DeviceInfo(adjustConfig.context, adjustConfig.sdkPrefix);
+        String gad = adjustConfig.googleAdId;
+
+        deviceInfo = new DeviceInfo(adjustConfig.context, adjustConfig.sdkPrefix, gad);
 
         if (adjustConfig.eventBufferingEnabled) {
             logger.info("Event buffering is enabled");
         }
 
-        String playAdId = Util.getPlayAdId(adjustConfig.context);
+        String playAdId = gad == null ? Util.getPlayAdId(adjustConfig.context) : gad;
         if (playAdId == null) {
             logger.warn("Unable to get Google Play Services Advertising ID at start time");
             if (deviceInfo.macSha1 == null &&

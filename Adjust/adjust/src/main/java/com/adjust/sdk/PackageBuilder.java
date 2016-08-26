@@ -231,7 +231,9 @@ class PackageBuilder {
         PackageBuilder.addBoolean(parameters, "device_known", adjustConfig.deviceKnown);
         PackageBuilder.addBoolean(parameters, "needs_response_details", true);
 
-        String playAdId = Util.getPlayAdId(adjustConfig.context);
+        String playAdId = adjustConfig.googleAdId == null
+                ? Util.getPlayAdId(adjustConfig.context)
+                : adjustConfig.googleAdId;
         PackageBuilder.addString(parameters, "gps_adid", playAdId);
         Boolean isTrackingEnabled = Util.isPlayTrackingEnabled(adjustConfig.context);
         PackageBuilder.addBoolean(parameters, "tracking_enabled", isTrackingEnabled);

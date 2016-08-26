@@ -20,6 +20,7 @@ public class AdjustConfig {
     long referrerClickTime;
     Boolean deviceKnown;
     Class deepLinkComponent;
+    String googleAdId;
     OnEventTrackingSucceededListener onEventTrackingSucceededListener;
     OnEventTrackingFailedListener onEventTrackingFailedListener;
     OnSessionTrackingSucceededListener onSessionTrackingSucceededListener;
@@ -213,5 +214,9 @@ public class AdjustConfig {
 
         logger.error("Unknown environment '%s'", environment);
         return false;
+    }
+
+    public void setGoogleAdId(String googleAdId) {
+        this.googleAdId = googleAdId;
     }
 }
