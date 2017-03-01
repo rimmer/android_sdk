@@ -51,6 +51,8 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
+
 import static com.adjust.sdk.Constants.ENCODING;
 import static com.adjust.sdk.Constants.MD5;
 import static com.adjust.sdk.Constants.SHA1;
@@ -89,7 +91,11 @@ public class Util {
     }
 
     public static String getPlayAdId(Context context) {
-        return Reflection.getPlayAdId(context);
+        try {
+            return AdvertisingIdClient.getAdvertisingIdInfo(context).getId();
+        } catch (Exception e) {
+            return Reflection.getPlayAdId(context);
+        }
     }
 
     public static void getGoogleAdId(Context context, final OnDeviceIdsRead onDeviceIdRead) {
