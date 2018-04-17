@@ -2818,9 +2818,7 @@ public class TestActivityHandler {
                 assertUtil.test("MockLogger setLogLevel: " + initLogLevel);
             }
             if (environment == "sandbox") {
-                assertUtil.Assert("SANDBOX: Adjust is running in Sandbox mode. Use this setting for testing. Don't forget to set the environment to `production` before publishing!");
-            } else if (environment == "production") {
-                assertUtil.Assert("PRODUCTION: Adjust is running in Production mode. Use this setting only for the build that you want to publish. Set the environment to `sandbox` if you want to test your app!");
+                assertUtil.Assert("SANDBOX: Adjust is running in Sandbox mode. Use this setting for testing. Don't forget to set the environment to `production` before publishing!");            
             } else {
                 assertUtil.fail();
             }

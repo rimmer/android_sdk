@@ -204,10 +204,7 @@ public class AdjustConfig {
             return true;
         }
         if (environment.equals(AdjustConfig.ENVIRONMENT_PRODUCTION)) {
-            logger.Assert(
-                    "PRODUCTION: Adjust is running in Production mode. " +
-                            "Use this setting only for the build that you want to publish. " +
-                            "Set the environment to `sandbox` if you want to test your app!");
+            // removed warning about PRODUCTION since it overwrites debug message from native crash        
             return true;
         }
 
